@@ -19,26 +19,27 @@ class GradingService(Resource):
         :return:
         """
         parts = repo.split('-', 1)
-        with shelve.open(
-                filename=current_app.config['GRADES'],
-                flag='c'
-        ) as grades_db:
-            key = parts[1] + '/' + parts[0]
-            if key in grades_db:
-                grade = Grade()
-                grade.from_dict(grades_db[key])
-                grade.points = points
-            else:
-                grade = Grade(
-                    actor=parts[1],
-                    repo=parts[0],
-                    courseid=0,
-                    assignmentid=0,
-                    userid=0,
-                    points=points
-                )
-            grade.updated = date.today()
-            grades_db[key] = grade.to_dict()
+        if len(parts) > 1:
+            with shelve.open(
+                    filename=current_app.config['GRADES'],
+                    flag='c'
+            ) as grades_db:
+                key = parts[1] + '/' + parts[0]
+                if key in grades_db:
+                    grade = Grade()
+                    grade.from_dict(grades_db[key])
+                    grade.points = points
+                else:
+                    grade = Grade(
+                        actor=parts[1],
+                        repo=parts[0],
+                        courseid=0,
+                        assignmentid=0,
+                        userid=0,
+                        points=points
+                    )
+                grade.updated = date.today()
+                grades_db[key] = grade.to_dict()
 
         return make_response(
             'done', 200

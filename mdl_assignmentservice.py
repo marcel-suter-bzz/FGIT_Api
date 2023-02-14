@@ -29,9 +29,9 @@ class MdlAssignmentService(Resource):
                 grade.from_dict(grades_db[key])
             else:
                 grade = Grade()
-                grade.points = 0.0
+                grade.points = -1.0
             grade.actor = actor
-            grade.repo = repo
+            grade.repo = repo.lower()
             grade.courseid = courseid
             grade.assignmentid = assignid
             grade.userid = userid
