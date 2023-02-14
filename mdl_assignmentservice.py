@@ -54,8 +54,8 @@ class MdlAssignmentService(Resource):
             output = '['
             keys = list(grades_db.keys())
             for key in keys:
-                output += json.dumps(grades_db[key], default=self.json_serial)
-            output += ']'
+                output += json.dumps(grades_db[key], default=self.json_serial) + ','
+            output = output[:-1] + ']'
 
         return make_response(
             output, 200
