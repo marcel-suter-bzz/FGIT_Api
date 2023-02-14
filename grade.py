@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 
 
 @dataclass
@@ -8,10 +9,11 @@ class Grade():
     """
     actor: str
     repo: str
-    courseid: int = 0
-    assignmentid: int = 0
-    userid: int = 0
-    points: float = 0.0
+    courseid: int
+    assignmentid: int
+    userid: int
+    points: float
+    updated: datetime
 
     def to_dict(self):
         """
@@ -24,7 +26,8 @@ class Grade():
             'courseid': self.courseid,
             'assignmentid': self.assignmentid,
             'userid': self.userid,
-            'points': self.points
+            'points': self.points,
+            'updated': self.updated
         }
         return data
 
@@ -40,6 +43,7 @@ class Grade():
         self.assignmentid = dict['assignmentid']
         self.userid = dict['userid']
         self.points = dict['points']
+        self.updated = dict['updated']
 
     @property
     def actor(self):
@@ -88,3 +92,11 @@ class Grade():
     @points.setter
     def points(self, value):
         self._points = value
+
+    @property
+    def updated(self):
+        return self._updated
+    
+    @updated.setter
+    def updated(self, value):
+        self._updated = value

@@ -1,4 +1,5 @@
 import shelve
+from datetime import date
 
 from flask import make_response, current_app
 from flask_restful import Resource
@@ -34,11 +35,16 @@ class MdlAssignmentService(Resource):
             grade.courseid = courseid
             grade.assignmentid = assignid
             grade.userid = userid
+            grade.updated = date.today()
             grades_db[key] = grade.to_dict()
+
+        return make_response(
+            'done', 200
+        )
 
     def get(self):
         """
-        reads the db an returns a json-array
+        reads the db and returns a json-array
         :return:
         """
         with shelve.open(
