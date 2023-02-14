@@ -1,5 +1,5 @@
 import shelve
-from datetime import date, datetime
+from datetime import date
 
 from flask import make_response, current_app
 from flask_restful import Resource
@@ -54,7 +54,7 @@ class MdlAssignmentService(Resource):
             output = '['
             keys = list(grades_db.keys())
             for key in keys:
-                output += json.dumps(grades_db[key], default=self.json_serial)
+                output += json.dumps(grades_db[key])
             output += ']'
 
         return make_response(
