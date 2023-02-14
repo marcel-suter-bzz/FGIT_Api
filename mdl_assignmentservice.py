@@ -1,5 +1,5 @@
 import shelve
-from datetime import date
+from datetime import date, datetime
 
 from flask import make_response, current_app
 from flask_restful import Resource
@@ -54,9 +54,16 @@ class MdlAssignmentService(Resource):
             output = '['
             keys = list(grades_db.keys())
             for key in keys:
-                output += json.dumps(grades_db[key])
+                output += json.dumps(grades_db[key], default=self.json_serial)
             output += ']'
 
         return make_response(
             output, 200
         )
+
+    def json_serial(self, obj):
+        """JSON serializer for objects not serializable by default json code"""
+
+        if isinstance(obj, (datetime, date)):
+            return obj.isoformat()
+        raise TypeError("Type %s not serializable" % type(obj))
