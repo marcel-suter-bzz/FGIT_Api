@@ -1,4 +1,5 @@
 import shelve
+from datetime import date
 
 from flask import make_response, current_app
 from flask_restful import Resource, reqparse
@@ -34,4 +35,9 @@ class GradingService(Resource):
                     userid=0,
                     points=points
                 )
+            grade.updated = date.today()
             grades_db[key] = grade.to_dict()
+
+        return make_response(
+            'done', 200
+        )
