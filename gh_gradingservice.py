@@ -9,12 +9,14 @@ from grade import Grade
 
 class GradingService(Resource):
 
-    def post(self, actor, repo, points):
+    def post(self, actor, owner, repo, points, max):
         """
         adds the points from GitHub autograding to the db
         :param actor:
+        :param owner:
         :param repo:
         :param points:
+        :param max:
         :return:
         """
         parts = repo.split('-', 1)
