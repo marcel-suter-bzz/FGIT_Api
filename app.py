@@ -38,7 +38,7 @@ dictConfig(
     }
 )
 api = Api(app)
-api.add_resource(GradingService, '/gh_grade/<actor>/<owner>/<repo>/<points>/<max>')
+api.add_resource(GradingService, '/gh_grade/<owner>/<repo>/<points>/<max>')
 api.add_resource(MdlAssignmentService, '/mdl_assign/<actor>/<repo>/<assignid>/<courseid>/<userid>', '/db_show')
 
 @app.route('/')

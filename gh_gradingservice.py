@@ -9,10 +9,9 @@ from grade import Grade
 
 class GradingService(Resource):
 
-    def post(self, actor, owner, repo, points, max):
+    def post(self, owner, repo, points, max):
         """
         adds the points from GitHub autograding to the db
-        :param actor:
         :param owner:
         :param repo:
         :param points:
@@ -20,20 +19,19 @@ class GradingService(Resource):
         :return:
         """
         parts = repo.split('-', 1)
-        template = parts[0]
         with shelve.open(
                 filename=current_app.config['GRADES'],
                 flag='c'
         ) as grades_db:
-            key = actor + '/' + template
+            key = parts[1] + '/' + parts[0]
             if key in grades_db:
                 grade = Grade()
                 grade.from_dict(grades_db[key])
                 grade.points = points
             else:
                 grade = Grade(
-                    actor=actor,
-                    repo=template,
+                    actor=parts[1],
+                    repo=parts[0],
                     courseid=0,
                     assignmentid=0,
                     userid=0,
