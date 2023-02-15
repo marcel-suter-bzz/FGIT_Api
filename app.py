@@ -38,12 +38,12 @@ dictConfig(
     }
 )
 api = Api(app)
-api.add_resource(GradingService, '/gh_grade/<repo>/<points>/<max>')
+api.add_resource(GradingService, '/gh_grade/<owner>/<repo>/<points>/<max>')
 api.add_resource(MdlAssignmentService, '/mdl_assign/<actor>/<repo>/<assignid>/<courseid>/<userid>', '/db_show')
 
 @app.route('/')
 def hello_world():  # put application's code here
-    return 'Hello World!'
+    return ''
 
 if __name__ == '__main__':
     app.run()
