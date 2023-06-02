@@ -57,9 +57,12 @@ class MdlAssignmentService(Resource):
                 output += json.dumps(grades_db[key], default=self.json_serial) + ','
             output = output[:-1] + ']'
 
-        return make_response(
-            output, 200
+        response = make_response(
+            output,
+            200
         )
+        response.headers["Content-Type"] = "application/json"
+        return response
 
     def json_serial(self, obj):
         """JSON serializer for objects not serializable by default json code"""
